@@ -1,3 +1,5 @@
+package io;
+
 public class OutputWriter {
 
     public static String convertToOutput(Object ob){

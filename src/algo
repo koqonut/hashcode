@@ -1,0 +1,17 @@
+all signals are initially red
+
+
+when do we toggle it green?
+    when there is a car(s) in that intersection  i1
+
+    at t= tx  how do we find how many cars in intersection i1
+        -> depends on the incoming streets
+            -> length of the path
+            -> green /red at prior intersection
+
+when should we toggle a signal red?
+
+
+
+
+
