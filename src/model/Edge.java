@@ -10,6 +10,8 @@ public class Edge implements Comparable<Edge> {
     public final Vertex vertexTo;
     public final Vertex vertexFrom;
     public final EdgeTraffic edgeTraffic;
+    public int carsHandled = 0;
+
 
     public Edge(int eid, String name, int length, Vertex vertexTo, Vertex vertexFrom) {
         this.eid = eid;
@@ -22,11 +24,10 @@ public class Edge implements Comparable<Edge> {
 
     @Override
     public int compareTo(Edge o) {
+        return Integer.compare(o.carsHandled, this.carsHandled);
+    }
 
-        int diff = Integer.compare(o.edgeTraffic.carsWaiting.size(), edgeTraffic.carsWaiting.size());
-        if (diff == 0) {
-            return Integer.compare(o.edgeTraffic.carsRunning.size(), edgeTraffic.carsRunning.size());
-        }
-        return diff;
+    public void incrementCarsHandled() {
+        carsHandled++;
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Vertex {
+public class Vertex implements Comparable<Vertex> {
     public final int vid;
     public List<Edge> incoming;
     public List<Edge> outgoing;
@@ -15,11 +15,11 @@ public class Vertex {
         outgoing = new ArrayList<>();
     }
 
-    public void addOutgoingEdge(Edge e){
+    public void addOutgoingEdge(Edge e) {
         outgoing.add(e);
     }
 
-    public void addIncomingEdge(Edge e){
+    public void addIncomingEdge(Edge e) {
         incoming.add(e);
     }
 
@@ -34,5 +34,20 @@ public class Vertex {
     @Override
     public int hashCode() {
         return Objects.hash(vid);
+    }
+
+    @Override
+    public int compareTo(Vertex o) {
+        int count = 0;
+        for (Edge e : incoming) {
+            count += e.carsHandled;
+        }
+
+        int count1 = 0;
+        for (Edge e : o.incoming) {
+            count1 += e.carsHandled;
+        }
+
+        return Integer.compare(count1, count);
     }
 }

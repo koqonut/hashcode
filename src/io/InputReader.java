@@ -10,8 +10,6 @@ import java.util.List;
 public class InputReader {
 
     public static CityMap createFromFile(List<String> lines) {
-        StringBuilder sb = new StringBuilder();
-
         //read line 0;
 
         String[] line0 = lines.get(0).split(" ");
@@ -31,13 +29,14 @@ public class InputReader {
             int vertexFrom = Integer.valueOf(line[0]);
             int vertexTo = Integer.valueOf(line[1]);
             int time = Integer.valueOf(line[3]);
+            String name = line[2];
 
             Vertex vf = cityMap.vertexList.get(vertexFrom);
             Vertex vt = cityMap.vertexList.get(vertexTo);
 
-            Edge e = new Edge(id, line[2], time, vf, vt);
+            Edge e = new Edge(id, name, time, vf, vt);
             cityMap.edgeList.add(e);
-            cityMap.name2edgeMap.put(line[2], e);
+            cityMap.name2edgeMap.put(name, e);
 
             vf.addOutgoingEdge(e);
             vt.addIncomingEdge(e);
@@ -47,7 +46,6 @@ public class InputReader {
 
         }
         System.out.println("streets done  " + i);
-
         id = 0;
         for (; i <= edgeCounts + cars; i++) {
             String[] line = lines.get(i).split(" ");
@@ -55,13 +53,24 @@ public class InputReader {
             Edge currEdgeLoc = cityMap.name2edgeMap.get(line[1]);
             Car c = new Car(id, currEdgeLoc, noOfHops);
             currEdgeLoc.edgeTraffic.carsWaiting.add(c);
-            for (int k = 2; k < noOfHops; k++) {
-                c.addPath(cityMap.name2edgeMap.get(line[k]));
+            currEdgeLoc.incrementCarsHandled();
+
+            for (int k = 2; k <= noOfHops; k++) {
+                Edge e = cityMap.name2edgeMap.get(line[k]);
+                e.incrementCarsHandled();
+                //System.out.println("e " + e.name + " dist |" + e.distanceFromEnd + "|" + totalDistance);
             }
             cityMap.carList.add(c);
             id++;
         }
+        /*
+        for (Edge e : cityMap.edgeList) {
+            System.out.println("Cars Handled  " + e.carsHandled);
+        }
 
+         */
+
+        System.out.println("Cars done  " + i);
         return cityMap;
     }
 }

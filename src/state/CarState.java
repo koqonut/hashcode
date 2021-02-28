@@ -2,6 +2,9 @@ package state;
 
 import model.Edge;
 
+/**
+ * Class unused
+ */
 public class CarState {
     public boolean isWaiting = true;
     public Edge currentEdge;
